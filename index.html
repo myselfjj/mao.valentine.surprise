@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Mao 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe5f0 50%, #ffd6e8 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .heart-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 30px;
+            animation: floatUp 15s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Stages */
+        .stage {
+            display: none;
+            text-align: center;
+            width: 100%;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .stage.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cartoon Character */
+        .cartoon-container {
+            margin-bottom: 30px;
+        }
+
+        .cartoon-char {
+            width: 200px;
+            height: auto;
+            animation: floatBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        }
+
+        .cartoon-finale {
+            width: 250px;
+            animation: floatBounce 2s ease-in-out infinite, pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                transform: scale(1.05) translateY(-20px);
+            }
+        }
+
+        @keyframes floatBounce {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Stage 1: The Question */
+        .greeting {
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .question {
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .button-container {
+            position: relative;
+            margin-top: 50px;
+            height: 200px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ddd, #bbb);
+            color: #666;
+            position: absolute;
+        }
+
+        .attempt-counter {
+            margin-top: 30px;
+            font-size: 1.2em;
+            color: #ff1493;
+            font-weight: bold;
+        }
+
+        .funny-message {
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #ff69b4;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        /* Stage 2: Love Calculator */
+        .calculator-title {
+            font-size: 2.5em;
+            color: #ff1493;
+            margin-bottom: 40px;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 50px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: linear-gradient(90deg, #ff1493, #ff69b4);
+            border-radius: 50px;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .loading-text {
+            font-size: 1.5em;
+            color: #ff69b4;
+            margin-top: 30px;
+            min-height: 50px;
+        }
+
+        /* Stage 3: Photo Gallery */
+        .gallery-title {
+            font-size: 2.5em;
+            color: #ff1493;
+            margin-bottom: 40px;
+        }
+
+        .photo-frame {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 500px;
+            margin: 0 auto;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-caption {
+            margin-top: 15px;
+            font-size: 1.2em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .control-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .photo-counter {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ff69b4;
+        }
+
+        /* Stage 4: Love Coupons */
+        .coupons-title {
+            font-size: 2.5em;
+            color: #ff1493;
+            margin-bottom: 40px;
+        }
+
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .coupon-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 3px dashed #ff69b4;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .coupon-card:nth-child(1) { animation-delay: 0.1s; }
+        .coupon-card:nth-child(2) { animation-delay: 0.2s; }
+        .coupon-card:nth-child(3) { animation-delay: 0.3s; }
+        .coupon-card:nth-child(4) { animation-delay: 0.4s; }
+        .coupon-card:nth-child(5) { animation-delay: 0.5s; }
+        .coupon-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .coupon-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .coupon-text {
+            font-size: 1.2em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .continue-btn {
+            margin-top: 40px;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Stage 5: Grand Finale */
+        .finale-title {
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 30px;
+            animation: heartbeat 1.5s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        .finale-message {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 30px auto;
+            max-width: 600px;
+        }
+
+        .finale-text {
+            font-size: 1.4em;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .surprise-text {
+            font-size: 1.5em;
+            color: #ff1493;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        .heart-burst {
+            position: fixed;
+            font-size: 40px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: burst 1s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .greeting {
+                font-size: 2em;
+            }
+            .question {
+                font-size: 1.8em;
+            }
+            .btn {
+                padding: 15px 30px;
+                font-size: 1.2em;
+            }
+            .photo-container {
+                height: 300px;
+            }
+            .coupons-grid {
+                grid-template-columns: 1fr;
+            }
+            .cartoon-char {
+                width: 150px;
+            }
+            .cartoon-finale {
+                width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="container">
+        <!-- Stage 1: The Question -->
+        <div class="stage active" id="stage1">
+            <div class="cartoon-container">
+                <img src="cartoon.png" alt="Cute Bear" class="cartoon-char">
+            </div>
+            <div class="greeting">Hey Mao 👋</div>
+            <div class="question">Will you be my Valentine? 💝</div>
+            <div class="funny-message" id="funnyMessage"></div>
+            <div class="button-container" id="buttonContainer">
+                <button class="btn btn-yes" id="yesBtn">Yes! 💕</button>
+                <button class="btn btn-no" id="noBtn">No 😢</button>
+            </div>
+            <div class="attempt-counter" id="attemptCounter"></div>
+        </div>
+
+        <!-- Stage 2: Love Calculator -->
+        <div class="stage" id="stage2">
+            <div class="calculator-title">Calculating Our Love... 💕</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+            <div class="loading-text" id="loadingText"></div>
+        </div>
+
+        <!-- Stage 3: Photo Gallery -->
+        <div class="stage" id="stage3">
+            <div class="gallery-title">Our 11 Beautiful Moments 📸</div>
+            <div class="photo-frame">
+                <div class="photo-container">
+                    <img id="galleryImage" src="" alt="Our Memory">
+                </div>
+                <div class="photo-caption" id="photoCaption">Memory 1 of 11</div>
+            </div>
+            <div class="gallery-controls">
+                <button class="control-btn" id="prevBtn" disabled>← Previous</button>
+                <button class="control-btn" id="nextBtn">Next →</button>
+            </div>
+            <div class="photo-counter" id="photoCounter">1 / 11</div>
+        </div>
+
+        <!-- Stage 4: Love Coupons -->
+        <div class="stage" id="stage4">
+            <div class="coupons-title">Your Valentine's Gifts 🎁</div>
+            <div class="coupons-grid">
+                <div class="coupon-card">
+                    <div class="coupon-icon">🤗</div>
+                    <div class="coupon-text">One Unlimited Hug Pass</div>
+                </div>
+                <div class="coupon-card">
+                    <div class="coupon-icon">🎬</div>
+                    <div class="coupon-text">Movie Marathon of Your Choice</div>
+                </div>
+                <div class="coupon-card">
+                    <div class="coupon-icon">👨‍🍳</div>
+                    <div class="coupon-text">Homemade Dinner by Chef Mao</div>
+                </div>
+                <div class="coupon-card">
+                    <div class="coupon-icon">🛍️</div>
+                    <div class="coupon-text">Shopping Buddy (Zero Complaints!)</div>
+                </div>
+                <div class="coupon-card">
+                    <div class="coupon-icon">📵</div>
+                    <div class="coupon-text">Phone-Free Quality Time Together</div>
+                </div>
+                <div class="coupon-card">
+                    <div class="coupon-icon">🍰</div>
+                    <div class="coupon-text">Your Favorite Dessert Anytime</div>
+                </div>
+            </div>
+            <button class="continue-btn" id="continueBtn">Continue to Surprise 💖</button>
+        </div>
+
+        <!-- Stage 5: Grand Finale -->
+        <div class="stage" id="stage5">
+            <div class="cartoon-container">
+                <img src="cartoon.png" alt="Cute Bear" class="cartoon-char cartoon-finale">
+            </div>
+            <div class="finale-title">💕 For My Mao 💕</div>
+            <div class="finale-message">
+                <div class="finale-text">
+                    I know I have made you cry a lot, but trust me, I love you more than anything. 
+                    I want to marry you and want to spend each second beside you. 
+                    You mean the world to me, and I promise to make you smile every single day. ❤️
+                </div>
+                <div class="surprise-text">
+                    I have a special surprise planned for you on 14th Feb... 🎁✨
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Floating hearts background
+        function createFloatingHearts() {
+            const heartBg = document.getElementById('heartBg');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                heartBg.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 15000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // Stage 1: The Moving No Button
+        let attempts = 0;
+        const funnyMessages = [
+            "Nahi nahi, wrong button! 😂",
+            "Arre, ye wala nahi! 😏",
+            "Your finger slipped, try again 🤭",
+            "Error 404: No not found 🚫",
+            "System.exe has stopped working 💔",
+            "Come on, you know the answer 😘",
+            "The universe wants you to click YES ✨",
+            "Nice try, but nope! 😄",
+            "This button is broken, try the other one 💕"
+        ];
+
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const funnyMessage = document.getElementById('funnyMessage');
+        const attemptCounter = document.getElementById('attemptCounter');
+
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton);
+
+        function moveNoButton(e) {
+            e.preventDefault();
+            attempts++;
+            
+            const container = document.getElementById('buttonContainer');
+            const containerRect = container.getBoundingClientRect();
+            
+            const randomX = Math.random() * (containerRect.width - 150);
+            const randomY = Math.random() * (containerRect.height - 60);
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            funnyMessage.textContent = funnyMessages[Math.min(attempts - 1, funnyMessages.length - 1)];
+            attemptCounter.textContent = `Nice try! Attempt #${attempts} 😄`;
+            
+            // Make Yes button bigger and No button smaller
+            const yesScale = 1 + (attempts * 0.1);
+            const noScale = Math.max(0.3, 1 - (attempts * 0.1));
+            yesBtn.style.transform = `scale(${Math.min(yesScale, 1.5)})`;
+            noBtn.style.transform = `scale(${noScale})`;
+            
+            if (attempts >= 8) {
+                noBtn.style.opacity = '0';
+                noBtn.style.pointerEvents = 'none';
+                funnyMessage.textContent = "Fine, I'll make it easy for you! 💕";
+            }
+        }
+
+        yesBtn.addEventListener('click', () => {
+            createHeartBurst(event);
+            setTimeout(() => startStage2(), 500);
+        });
+
+        function createHeartBurst(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-burst';
+                heart.textContent = '❤️';
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const distance = 100 + Math.random() * 100;
+                heart.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                heart.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+            }
+        }
+
+        // Stage 2: Love Calculator
+        function startStage2() {
+            document.getElementById('stage1').classList.remove('active');
+            document.getElementById('stage2').classList.add('active');
+            
+            const progressBar = document.getElementById('progressBar');
+            const loadingText = document.getElementById('loadingText');
+            
+            const messages = [
+                "Analyzing cuteness levels...",
+                "Measuring chemistry...",
+                "Checking vibe compatibility...",
+                "Calculating how lucky I am...",
+                "Result: Perfect Match! 💯❤️"
+            ];
+            
+            let progress = 0;
+            let messageIndex = 0;
+            
+            const interval = setInterval(() => {
+                progress += 2;
+                progressBar.style.width = progress + '%';
+                progressBar.textContent = progress + '%';
+                
+                if (progress % 20 === 0 && messageIndex < messages.length) {
+                    loadingText.textContent = messages[messageIndex];
+                    messageIndex++;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(startStage3, 2000);
+                }
+            }, 50);
+        }
+
+        // Stage 3: Photo Gallery
+        let currentPhoto = 0;
+        const totalPhotos = 11;
+        
+        // You'll need to replace these with actual photo paths
+        const photos = [];
+        for (let i = 1; i <= 11; i++) {
+            photos.push(`photo${i}.jpg`); // Replace with actual photo paths
+        }
+
+        function startStage3() {
+            document.getElementById('stage2').classList.remove('active');
+            document.getElementById('stage3').classList.add('active');
+            
+            updateGallery();
+        }
+
+        function updateGallery() {
+            const galleryImage = document.getElementById('galleryImage');
+            const photoCaption = document.getElementById('photoCaption');
+            const photoCounter = document.getElementById('photoCounter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            galleryImage.src = photos[currentPhoto];
+            photoCaption.textContent = `Memory ${currentPhoto + 1} of ${totalPhotos}`;
+            photoCounter.textContent = `${currentPhoto + 1} / ${totalPhotos}`;
+            
+            prevBtn.disabled = currentPhoto === 0;
+            nextBtn.disabled = false;
+            
+            if (currentPhoto === totalPhotos - 1) {
+                nextBtn.textContent = "Continue →";
+            }
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPhoto > 0) {
+                currentPhoto--;
+                updateGallery();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentPhoto < totalPhotos - 1) {
+                currentPhoto++;
+                updateGallery();
+            } else {
+                startStage4();
+            }
+        });
+
+        // Stage 4: Love Coupons
+        function startStage4() {
+            document.getElementById('stage3').classList.remove('active');
+            document.getElementById('stage4').classList.add('active');
+        }
+
+        document.getElementById('continueBtn').addEventListener('click', () => {
+            startStage5();
+        });
+
+        // Stage 5: Grand Finale
+        function startStage5() {
+            document.getElementById('stage4').classList.remove('active');
+            document.getElementById('stage5').classList.add('active');
+            
+            // Create massive heart explosion
+            setTimeout(() => {
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.className = 'heart-burst';
+                        heart.textContent = '💕';
+                        heart.style.left = Math.random() * window.innerWidth + 'px';
+                        heart.style.top = Math.random() * window.innerHeight + 'px';
+                        
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = 100 + Math.random() * 200;
+                        heart.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                        heart.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                        
+                        document.body.appendChild(heart);
+                        setTimeout(() => heart.remove(), 1000);
+                    }, i * 50);
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>
